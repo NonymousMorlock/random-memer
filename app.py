@@ -55,7 +55,7 @@ def get_new_memes():
             imgs.append(img['src'])
         return imgs
     except Exception as e:
-        print(f"Error Occurred: {e}")
+        print(f"Error Occurred: {e}\nFetching from API")
         return get_new_memes_api()
 
 
