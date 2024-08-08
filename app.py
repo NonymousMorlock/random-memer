@@ -37,22 +37,26 @@ def get_new_memes():
     Returns:
         imgs [list]: List of image URLs
     """
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
-        "Cookie": "PHPSESSID=44ffmkgnot4ihuopf8ot05s1s3; _ga=GA1.2.2105294567.1668857619; "
-                  "_gid=GA1.2.1610244212.1668857619; _gat=1",
-        'Accept-Language': 'en-US,en;q=0.5'
-    }
-    url = 'https://www.memedroid.com/memes/tag/programming'
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-    soup = BeautifulSoup(response.content, 'lxml')
-    pics = soup.find_all('picture')
-    imgs = []
-    for pic in pics:
-        img = pic.find('img')
-        imgs.append(img['src'])
-    return imgs
+    try:
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+            "Cookie": "PHPSESSID=44ffmkgnot4ihuopf8ot05s1s3; _ga=GA1.2.2105294567.1668857619; "
+                      "_gid=GA1.2.1610244212.1668857619; _gat=1",
+            'Accept-Language': 'en-US,en;q=0.5'
+        }
+        url = 'https://www.memedroid.com/memes/tag/programming'
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.content, 'lxml')
+        pics = soup.find_all('picture')
+        imgs = []
+        for pic in pics:
+            img = pic.find('img')
+            imgs.append(img['src'])
+        return imgs
+    except Exception as e:
+        print(f"Error Occurred: {e}")
+        return get_new_memes_api()
 
 
 def serve_pil_image(pil_img):
