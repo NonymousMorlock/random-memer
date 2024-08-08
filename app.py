@@ -14,6 +14,7 @@ from io import BytesIO
 
 app = Flask(__name__)
 
+
 def get_new_memes():
     """Scrapers the website and extracts image URLs
 
@@ -47,6 +48,7 @@ def serve_pil_image(pil_img):
     img_io.seek(0)
     return send_file(img_io, mimetype='image/jpeg')
 
+
 @app.after_request
 def set_response_headers(response):
     """Sets Cache-Control header to no-cache so GitHub
@@ -57,6 +59,7 @@ def set_response_headers(response):
     response.headers['Expires'] = '0'
     return response
 
+
 @app.route("/", methods=['GET'])
 def return_meme():
     img_url = random.choice(get_new_memes())
@@ -64,3 +67,6 @@ def return_meme():
     res.raw.decode_content = True
     img = Image.open(res.raw)
     return serve_pil_image(img)
+
+
+app.run(host='0.0.0.0', port=80)
