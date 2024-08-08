@@ -39,13 +39,13 @@ def get_new_memes():
     """
     url = 'https://www.memedroid.com/memes/tag/programming'
     response = requests.get(url)
+    response.raise_for_status()
     soup = BeautifulSoup(response.content, 'lxml')
-    divs = soup.find_all('div', class_='item-aux-container')
+    pics = soup.find_all('picture')
     imgs = []
-    for div in divs:
-        img = div.find('img')['src']
-        if img.startswith('http') and img.endswith('jpeg'):
-            imgs.append(img)
+    for pic in pics:
+        img = pic.find('img')
+        imgs.append(img['src'])
     return imgs
 
 
