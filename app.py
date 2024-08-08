@@ -6,29 +6,13 @@ Flask API to return random meme images
 """
 import os
 import random
-from io import BytesIO
-
 import requests
 from PIL import Image
 from bs4 import BeautifulSoup
 from flask import Flask, send_file
+from io import BytesIO
 
 app = Flask(__name__)
-
-
-def get_new_memes_api():
-    url = "https://programming-memes-images.p.rapidapi.com/v1/memes"
-
-    headers = {
-        "x-rapidapi-key": os.environ['RAPIDAPI_KEY'],
-        "x-rapidapi-host": "programming-memes-images.p.rapidapi.com"
-    }
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-    memes = response.json()
-    images = [meme['image'] for meme in memes]
-
-    return images
 
 
 def get_new_memes():
